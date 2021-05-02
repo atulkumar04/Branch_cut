@@ -30,3 +30,7 @@ echo "Release Branch is $releaseBranch"
 
 git checkout -b $featureBranch $devBranch
 git push --all origin
+
+fileName="testfile.txt"
+sed -i.backup -E "s/\= v[0-9.]+/\= $versionLabel/" $versionFile $versionFile
+
