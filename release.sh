@@ -28,24 +28,34 @@ echo "Release Branch is $releaseBranch"
 
 #creating release Branch($releaseBranch)
 
-git checkout $releaseBranch
+echo "Creating release Branch $releaseBranch"
+echo ""
+git checkout -b $releaseBranch >/dev/null
 
 #creating feature branch($featureBranch) from develop branch($devBranch)
 
-git checkout -b $featureBranch $devBranch
-git push --all origin
+echo "creating feature branch from develop branch"
+echo ""
+git checkout -b $featureBranch $devBranch >/dev/null
+git push --all origin >/dev/null
+
+echo "Incrementing files version"
 
 fileName="testfile.txt"
-sed -i.backup -E "s/\= v[0-9.]+/\= $versionLabel/" $versionFile $versionFile
+sed -i.backup -E "s/\= v[0-9.]+/\= $versionLabel/" $fileName $fileName
 
 
 # remove backup file created by sed command
-rm $versionFile.backup
+rm $fileName.backup
  
 # commit version number increment
-git commit -am "Incrementing version number to $versionLabel"
+echo "Commit changes to feature branch"
+
+git commit -am "Incrementing version number to $versionLabel" >/dev/null
  
 # merge feature branch into release branch 
-git checkout $featureBranch
-git merge --no-ff $releaseBranch
+echo "Merging  feature branch into release branch"
+
+git checkout $featureBranch >/dev/null
+git merge --no-ff $releaseBranch >/dev/null
 
