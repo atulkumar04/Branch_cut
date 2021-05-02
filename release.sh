@@ -20,13 +20,17 @@ if [ -z "$version" ]; then
 fi
 
 devBranch=develop
-featurebranch="feature/$versionLabel"
+featureBranch="feature/$versionLabel"
 releaseBranch="release/$versionLabel"
 
 echo "Feature Branch is $featurebranch"
 echo "Release Branch is $releaseBranch"
 
-#creating feature branch from develop branch
+#creating feature branch($featureBranch) from develop branch($devBranch)
 
 git checkout -b $featureBranch $devBranch
+git push --all origin
+
+fileName="testfile.txt"
+sed -i.backup -E "s/\= v[0-9.]+/\= $versionLabel/" $versionFile $versionFile
 
