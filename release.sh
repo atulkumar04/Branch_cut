@@ -12,7 +12,7 @@ echo ""
 
 #setting up the version labels
 version=$1
-versionLabel=v$version
+versionLabel=$version
 
 if [ -z "$version" ]; then 
  echo "Please specify a versionLable to continue"
@@ -37,12 +37,11 @@ git checkout -b $releaseBranch >/dev/null
 echo "creating feature branch from develop branch"
 echo ""
 git checkout -b $featureBranch $devBranch >/dev/null
-git push --all origin >/dev/null
 
 echo "Incrementing files version"
 
 fileName="testfile.txt"
-sed -i.backup -E "s/\= v[0-9.]+/\= $versionLabel/" $fileName $fileName
+sed -i.backup -E "s/\= [0-9][0-9][0-9][0-9].[0-9]*.[0-9]*-SNAPSHOT+/\= $versionLabel-SNAPSHOT/" $fileName $fileName
 
 
 # remove backup file created by sed command
@@ -56,6 +55,7 @@ git commit -am "Incrementing version number to $versionLabel" >/dev/null
 # merge feature branch into release branch 
 echo "Merging  feature branch into release branch"
 
-git checkout $featureBranch >/dev/null
-git merge --no-ff $releaseBranch >/dev/null
+git checkout $releaseBranch >/dev/null
+git merge --no-ff $featureBranch >/dev/null
 
+git push --all origin >/dev/null
