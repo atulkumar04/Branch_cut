@@ -34,3 +34,20 @@ git push --all origin
 fileName="testfile.txt"
 sed -i.backup -E "s/\= v[0-9.]+/\= $versionLabel/" $versionFile $versionFile
 
+# remove backup file created by sed command
+rm $versionFile.backup
+ 
+# commit version number increment
+git commit -am "Incrementing version number to $versionLabel"
+ 
+# merge feature branch into release branch
+git checkout $releaseBranch
+git merge --no-ff $featureBranch
+ 
+ 
+# merge release branch with the new version number back into develop
+git checkout $devBranch
+git merge --no-ff $releaseBranch
+ 
+# remove release branch
+git branch -d $releaseBranch
