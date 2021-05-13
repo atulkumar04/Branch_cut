@@ -53,9 +53,9 @@ echo "Commit changes to feature branch"
 git commit -am "Incrementing version number to $versionLabel" >/dev/null
  
 # merge feature branch into release branch 
-echo "Merging  feature branch into release branch"
+#echo "Merging  feature branch into release branch"
 
-git checkout $releaseBranch >/dev/null
-git merge --no-ff $featureBranch >/dev/null
+#git checkout $releaseBranch >/dev/null
+#git merge --no-ff $featureBranch >/dev/null
 
 git push --all origin >/dev/null
